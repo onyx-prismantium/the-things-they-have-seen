@@ -34,6 +34,8 @@ func _ready() -> void:
 	mouse_exited.connect(_on_mouse_exited)
 	input_event.connect(_on_input_event)
 	GameState.economy_changed.connect(_update_pips)
+	NluService.request_started.connect(_on_request_started)
+	NluService.request_finished.connect(_on_request_finished)
 
 func _build_shape() -> void:
 	_polygon = Polygon2D.new()
@@ -106,4 +108,23 @@ func show_response(result: QAResult) -> void:
 	add_child(bubble)
 	bubble.setup(result)
 	AudioDirector.play_answer(object_id, result.answer)
+
+var _shimmer_tween: Tween = null
+
+## "the clicked object gently pulses ... input locked" (BUILD_BRIEF.md §4.4).
+func _on_request_started(requested_object_id: String) -> void:
+	if requested_object_id != object_id:
+		return
+	if _shimmer_tween != null and _shimmer_tween.is_valid():
+		_shimmer_tween.kill()
+	_shimmer_tween = create_tween().set_loops()
+	_shimmer_tween.tween_property(_polygon, "modulate", Color(1.25, 1.25, 1.25), 0.35)
+	_shimmer_tween.tween_property(_polygon, "modulate", Color(1, 1, 1), 0.35)
+
+func _on_request_finished(finished_object_id: String, _result: QAResult) -> void:
+	if finished_object_id != object_id:
+		return
+	if _shimmer_tween != null and _shimmer_tween.is_valid():
+		_shimmer_tween.kill()
+	_polygon.modulate = Color(1, 1, 1)
 

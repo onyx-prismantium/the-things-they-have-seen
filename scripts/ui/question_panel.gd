@@ -24,6 +24,7 @@ func _ready() -> void:
 	visible = false
 	_line_edit.max_length = MAX_QUESTION_LENGTH
 	_ask_button.pressed.connect(_on_ask_pressed)
+	_ask_button.pressed.connect(func() -> void: AudioDirector.play_ui("click"))
 	_line_edit.text_submitted.connect(func(_t: String) -> void: _on_ask_pressed())
 	%CloseButton.pressed.connect(_on_close_pressed)
 	GameState.economy_changed.connect(_update_pips)

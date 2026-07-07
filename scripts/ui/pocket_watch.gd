@@ -15,6 +15,7 @@ extends Control
 func _ready() -> void:
 	tooltip_text = "Ask yes/no questions. Huh?! and exact repeats are free. Each object tires after 3 true answers. One Focus refund per case."
 	_button.pressed.connect(_on_watch_pressed)
+	_button.pressed.connect(func() -> void: AudioDirector.play_ui("click"))
 	_use_focus_button.pressed.connect(_on_use_focus_pressed)
 	GameState.softlock_state_changed.connect(_on_softlock_changed)
 	_populate_object_list()

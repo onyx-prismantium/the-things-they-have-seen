@@ -25,6 +25,7 @@ func _ready() -> void:
 	_room.object_selected.connect(_on_object_selected)
 	_question_panel.answered.connect(_on_answered)
 	_present_deduction_button.pressed.connect(_on_present_deduction_pressed)
+	_present_deduction_button.pressed.connect(func() -> void: AudioDirector.play_ui("click"))
 	_case_briefing.finished.connect(_on_briefing_finished)
 
 	if not NluService.is_mock() and NluService.model_missing():

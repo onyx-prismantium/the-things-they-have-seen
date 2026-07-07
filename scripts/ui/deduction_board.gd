@@ -26,6 +26,7 @@ var _weapon_buttons: Dictionary = {}
 func _ready() -> void:
 	visible = false
 	_submit_button.pressed.connect(_on_submit_pressed)
+	_submit_button.pressed.connect(func() -> void: AudioDirector.play_ui("click"))
 	_confirm_dialog.confirmed.connect(_on_confirm_deduction)
 	%CloseButton.pressed.connect(_on_close_pressed)
 	_populate_columns()

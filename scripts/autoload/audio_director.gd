@@ -7,8 +7,11 @@ extends Node
 const BLIP_DIR := "res://assets/audio/blips/"
 const PITCH_JITTER := 0.03
 
+const AMBIENCE_PATH := "res://assets/audio/ambience_loop.wav"
+
 var _voice_player: AudioStreamPlayer
 var _ui_player: AudioStreamPlayer
+var _ambience_player: AudioStreamPlayer
 var _stream_cache: Dictionary = {} # path -> AudioStream
 
 func _ready() -> void:
@@ -18,6 +21,22 @@ func _ready() -> void:
 	_ui_player = AudioStreamPlayer.new()
 	_ui_player.name = "UiPlayer"
 	add_child(_ui_player)
+	_ambience_player = AudioStreamPlayer.new()
+	_ambience_player.name = "AmbiencePlayer"
+	_ambience_player.volume_db = -18.0
+	add_child(_ambience_player)
+	_play_ambience()
+
+func _play_ambience() -> void:
+	var stream := _load_cached(AMBIENCE_PATH)
+	if stream == null:
+		return
+	if stream is AudioStreamWAV:
+		var wav := stream as AudioStreamWAV
+		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		wav.loop_end = wav.data.size() / 2 # 16-bit mono: 2 bytes/frame
+	_ambience_player.stream = stream
+	_ambience_player.play()
 
 func play_answer(object_id: String, answer: String) -> void:
 	var path := "%s%s_%s.wav" % [BLIP_DIR, object_id, answer]
