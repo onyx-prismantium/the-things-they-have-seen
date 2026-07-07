@@ -44,6 +44,10 @@ func _ready() -> void:
 		await _run_selftest_m3_golden()
 		get_tree().quit()
 
+	if OS.get_environment("SELFTEST_M4") != "":
+		await _run_selftest_m4()
+		get_tree().quit()
+
 ## BUILD_BRIEF.md §2.3: "Add a boot check with a clear 'place model file here'
 ## error screen listing the expected path + filename." Built procedurally —
 ## this is a one-off system message, not case content, so it doesn't warrant
@@ -97,11 +101,20 @@ func _process(_delta: float) -> void:
 		await get_tree().process_frame
 		await get_tree().process_frame
 		_debug_simulate_hover()
+		_debug_simulate_win()
 		await _debug_simulate_panel()
 		await get_tree().process_frame
 		get_viewport().get_texture().get_image().save_png(shot_path)
 		print("Main: screenshot saved to %s" % shot_path)
 		get_tree().quit()
+
+func _debug_simulate_win() -> void:
+	if OS.get_environment("DEBUG_SIMULATE_WIN") == "":
+		return
+	var the_case: CaseDef = CaseLoader.current_case
+	var solution: Dictionary = the_case.solution
+	GameState.reset_case()
+	GameState.submit_deduction(String(solution.culprit), String(solution.motive), String(solution.weapon))
 
 func _debug_simulate_panel() -> void:
 	var open_id := OS.get_environment("DEBUG_OPEN_PANEL")
@@ -244,6 +257,62 @@ func _run_selftest_m3_golden() -> void:
 	])
 	for f: String in failures:
 		print("  FAIL: ", f)
+
+## M4 gate (§7): full playthrough to win and to lose on mock; softlock demo.
+func _run_selftest_m4() -> void:
+	var the_case: CaseDef = CaseLoader.current_case
+	var solution: Dictionary = the_case.solution
+
+	# --- WIN: walk the intended solve path (§5.5), then submit the true solution.
+	GameState.reset_case()
+	var solve_path: Array = [
+		["bay_window", "was your latch broken from inside the room"],
+		["bay_window", "did you see silas crane that night"],
+		["bay_window", "did edmund wave a torn page at silas"],
+		["iron_cashbox", "were you opened with your own key"],
+		["persian_rug", "did a stranger walk on you that night"],
+		["fireplace_poker", "did you strike edmund"],
+		["marble_mantelpiece", "did edmund's head strike you"],
+		["marble_mantelpiece", "was he pushed"],
+		["persian_rug", "did edmund fall near the fireplace"],
+		["brandy_glasses", "did silas crane drink here that night"],
+		["persian_rug", "did silas stand over edmund's body"],
+		["leather_ledger", "did silas crane write in you"],
+		["leather_ledger", "were your figures altered"],
+		["fire_grate", "was it a page from a ledger"],
+	]
+	for step: Array in solve_path:
+		var obj: ObjectDef = the_case.objects[String(step[0])]
+		await NluService.ask(obj, String(step[1]))
+	var win_correct := GameState.submit_deduction(String(solution.culprit), String(solution.motive), String(solution.weapon))
+	print("SELFTEST_M4 win: correct=%d/3 case_is_over=%s (expect 3/3, true)" % [win_correct, GameState.case_is_over])
+
+	# --- LOSE: three wrong deductions in a row.
+	GameState.reset_case()
+	var wrong_culprit := ""
+	for s: Dictionary in the_case.suspects:
+		if String(s.get("id", "")) != String(solution.culprit):
+			wrong_culprit = String(s.get("id", ""))
+			break
+	var last_correct := -1
+	for attempt: int in range(3):
+		last_correct = GameState.submit_deduction(wrong_culprit, "simple-robbery", "walking-cane")
+	print("SELFTEST_M4 lose: attempts_left=%d case_is_over=%s last_correct=%d (expect 0, true, 0)" % [GameState.deduction_attempts_left, GameState.case_is_over, last_correct])
+
+	# --- SOFTLOCK: exhaust every object supporting "weapon" (mantel, rug, grate)
+	# without learning any of its solution_support facts, with Focus already spent.
+	GameState.reset_case()
+	GameState.focus_available = false
+	for oid: String in ["marble_mantelpiece", "persian_rug", "fire_grate"]:
+		for i: int in range(GameState.MAX_QUESTIONS_PER_OBJECT):
+			GameState.consume_question(oid)
+	GameState.check_softlock()
+	var weapon_softlocked: bool = bool(GameState.softlocked_components.get("weapon", false))
+	print("SELFTEST_M4 softlock: weapon=%s (expect true); culprit=%s motive=%s (expect false, still reachable elsewhere)" % [
+		weapon_softlocked,
+		GameState.softlocked_components.get("culprit", false),
+		GameState.softlocked_components.get("motive", false),
+	])
 
 func _log_nobodywho_status() -> void:
 	if ClassDB.class_exists("NobodyWhoChat") and ClassDB.class_exists("NobodyWhoModel"):
