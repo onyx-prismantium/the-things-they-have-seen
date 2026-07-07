@@ -48,10 +48,22 @@ is the snapshot from the M3 tuning session.
    to `Dist` regardless of call order; there is no exposed builder path that
    attaches a grammar step to a custom (e.g. greedy) sampler config in this
    version. BUILD_BRIEF.md §4.3 point 2 anticipated this might not be
-   possible ("if the API allows"); it does not, in v9.4.0. This is the most
-   likely root cause of the yes-bias being resistant to prompt tuning alone —
-   Dist sampling introduces real variance on top of whatever the model's true
-   (and apparently not very confident) distribution is.
+   possible ("if the API allows"); it does not, in v9.4.0.
+
+   **Correction, from the M6 harness (`docs/reports/m6_harness_report.md`):**
+   my initial hypothesis here was that Dist sampling's variance was the main
+   driver of the yes-bias. The M6 flip-rate measurement (same question, 3
+   runs) came back at **0%** — every question got the exact same answer every
+   time, right or wrong. `SetSamplerConfig` includes a fixed `seed: 1234`
+   applied identically per request, so "Dist" is a deterministic function of
+   (prompt, question) here, not a noisy one. This means the accuracy gap is a
+   genuine, repeatable model calibration/capability issue for specific
+   (object, question) pairs — not run-to-run sampling variance as I
+   originally guessed. Whether *greedy* decoding would still change the
+   *outcome* (as opposed to just removing noise that, per this data, isn't
+   actually present) is now an open question rather than the confident
+   diagnosis below — worth re-testing if a future addon version exposes it,
+   but don't assume it's a silver bullet based on this analysis alone.
 4. **Bounded-thinking (§8.4) made things worse, not better**, for both model
    sizes tried: free-text reasoning quality was poor (near-incoherent, including
    one run that degenerated into repeating unrelated French words) and latency

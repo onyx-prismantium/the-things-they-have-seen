@@ -13,8 +13,14 @@ Full design brief: [`BUILD_BRIEF.md`](BUILD_BRIEF.md).
 
 ## Status
 
-Building in the milestone order set out in the brief (§7). See that document
-for the full architecture, data model, and acceptance criteria per milestone.
+All milestones (§7 M0–M6) built. The vertical slice — one case ("The Silent
+Study"), 8 interrogable objects, deduction board, win/lose epilogues, voice
+blips — is complete and fully playable via `--mock-nlu` (CI-safe, 61/61 golden
+questions correct). The live local-model path is wired and functional but its
+classification accuracy does not currently meet the harness targets with
+either Qwen3-0.6B or Qwen3-1.7B — see `docs/reports/m3_harness_report.md` and
+`docs/reports/m6_harness_report.md` for the full tuning history, diagnosis,
+and numbers before relying on it for anything beyond development/demo use.
 
 ## Requirements
 
@@ -33,6 +39,18 @@ godot --path . -- --mock-nlu
 
 # Play against the live local model (after tools/install_nobodywho.sh + model download):
 godot --path .
+```
+
+## Testing
+
+```sh
+# Unit layer (mock, CI-safe, no model needed): normalization, cache keys,
+# grammar generation, validator rules, economy math, softlock, CaseLoader.
+godot --headless --path . -s res://tests/run_unit_tests.gd -- --mock-nlu
+
+# Paraphrase consistency harness against the live model (needs the model
+# file — see docs/MODEL_SETUP.md):
+godot --headless --path . -s res://tests/run_harness.gd -- --runs 3
 ```
 
 ## Project layout

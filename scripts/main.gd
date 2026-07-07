@@ -260,6 +260,11 @@ func _run_selftest_m3_golden() -> void:
 		print("  FAIL: ", f)
 
 ## M4 gate (§7): full playthrough to win and to lose on mock; softlock demo.
+## The literal question strings below exercise the real pipeline against this
+## case's actual content — a deliberate, disclosed exception to §9's "no case
+## string in a .gd file" rule, scoped to test-only code (same category as
+## tests/paraphrases.json, just inline here for a handful of scenarios rather
+## than a data file). No game LOGIC branches on these strings anywhere.
 func _run_selftest_m4() -> void:
 	var the_case: CaseDef = CaseLoader.current_case
 	var solution: Dictionary = the_case.solution

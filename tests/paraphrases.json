@@ -1,0 +1,317 @@
+{
+  "fact_paraphrases": [
+    {
+      "object_id": "bay_window",
+      "fact_id": "window-silas-arrive-door",
+      "expected": "yes",
+      "paraphrases": [
+        "did you see silas crane arrive that night",
+        "did silas come to the house that evening",
+        "was silas crane let in at the front door",
+        "did you watch silas walk up the path",
+        "did u see silas arrive that nite??",
+        "was mr crane one of your visitors that night",
+        "could you tell me if silas came by that evening",
+        "did silas show up around nine o'clock",
+        "was silas admitted through the front door",
+        "did you observe silas coming up the front path"
+      ]
+    },
+    {
+      "object_id": "bay_window",
+      "fact_id": "window-papers-quarrel",
+      "expected": "yes",
+      "paraphrases": [
+        "did you see edmund wave a paper at silas",
+        "did edmund brandish a torn page during an argument",
+        "was there a quarrel over some papers that you saw",
+        "did you witness edmund shaking a page at silas",
+        "did edmund and silas argue about a document",
+        "was a torn page shown to silas angrily",
+        "did u see them fighting over paper?",
+        "could you see edmund holding up a page while shouting",
+        "did you see a dispute over a torn sheet of paper",
+        "was edmund waving something at silas in anger"
+      ]
+    },
+    {
+      "object_id": "brandy_glasses",
+      "fact_id": "glasses-silas-lips",
+      "expected": "yes",
+      "paraphrases": [
+        "did silas crane drink from you that night",
+        "were silas's lips on one of you",
+        "did mr crane have a drink that evening",
+        "was silas one of the two who drank",
+        "did u taste silas's mouth that nite",
+        "was silas crane's moustache against you",
+        "did silas gulp down some brandy",
+        "were you drunk from by silas that night",
+        "could you tell if silas drank that evening",
+        "did silas's lips touch you"
+      ]
+    },
+    {
+      "object_id": "persian_rug",
+      "fact_id": "rug-treads-known",
+      "expected": "yes",
+      "paraphrases": [
+        "did only edmund and silas walk on you that night",
+        "were the only footsteps you felt familiar ones",
+        "did you recognize every tread that evening",
+        "were edmund's and silas's boots the only ones on you",
+        "did u only feel treads you knew that nite",
+        "was every footstep that night one you recognized",
+        "did only familiar boots cross you",
+        "were the treads that night all known to you",
+        "did you feel only edmund's and silas's boots",
+        "was there nobody unfamiliar walking on you"
+      ]
+    },
+    {
+      "object_id": "persian_rug",
+      "fact_id": "rug-silas-stood-over",
+      "expected": "yes",
+      "paraphrases": [
+        "did silas stand over edmund's body",
+        "did silas's boots pause over the body",
+        "was silas standing still above edmund for a moment",
+        "did silas linger over the body before moving",
+        "did u feel silas standing above the body?",
+        "did silas's feet stay near the body a while",
+        "was there a long still moment with silas over him",
+        "did silas hover above edmund's body briefly",
+        "did silas stand motionless over the corpse",
+        "was silas standing right over edmund"
+      ]
+    },
+    {
+      "object_id": "leather_ledger",
+      "fact_id": "ledger-second-hand",
+      "expected": "yes",
+      "paraphrases": [
+        "did silas crane write in your pages",
+        "was there a second hand writing in you for months",
+        "did mr crane make entries in you after hours",
+        "did silas's pen touch your pages regularly",
+        "did silas write in u for months??",
+        "was a lighter pen writing in you besides edmund's",
+        "did silas's handwriting appear in your pages",
+        "were there entries made by silas over time",
+        "did you recognize silas's loops in your pages",
+        "was silas the second hand that wrote in you"
+      ]
+    },
+    {
+      "object_id": "leather_ledger",
+      "fact_id": "ledger-figures-altered",
+      "expected": "yes",
+      "paraphrases": [
+        "were your figures altered",
+        "were some sums in you scratched out and rewritten",
+        "did someone change the numbers in your pages",
+        "were figures made smaller by a second hand",
+        "were ur numbers messed with?",
+        "did the sums in you get rewritten irregularly",
+        "was there tampering with your figures",
+        "were entries in you altered to smaller amounts",
+        "did someone rewrite your recorded sums",
+        "were your numbers changed from what they should be"
+      ]
+    },
+    {
+      "object_id": "leather_ledger",
+      "fact_id": "ledger-torn-page",
+      "expected": "yes",
+      "paraphrases": [
+        "did edmund tear a page out of you",
+        "was a page ripped from you by edmund",
+        "did edmund's hand tear one of your pages",
+        "was a sheet torn out of you that afternoon",
+        "did edmund rip a page out of u",
+        "was one of your pages torn away by edmund",
+        "did edmund tear out a page in anger",
+        "was a page removed from you by force",
+        "did edmund's own hand tear you",
+        "was a page torn from your binding"
+      ]
+    },
+    {
+      "object_id": "fire_grate",
+      "fact_id": "grate-paper-fed",
+      "expected": "yes",
+      "paraphrases": [
+        "did someone burn a paper in you that night",
+        "was a sheet of paper fed to your flames",
+        "did a gloved hand feed you a page",
+        "was paper burned in you after the thump",
+        "did u burn a sheet of paper that nite",
+        "was a single page fed into your fire",
+        "did someone put paper into your flames",
+        "was a sheet of paper consumed by your fire",
+        "did a hand feed you a page to burn",
+        "was there paper burnt in you that evening"
+      ]
+    },
+    {
+      "object_id": "marble_mantelpiece",
+      "fact_id": "mantel-head-struck",
+      "expected": "yes",
+      "paraphrases": [
+        "did edmund's head strike your corner",
+        "did a man's head hit you hard",
+        "did you feel a head strike your stone",
+        "was edmund's head struck against you",
+        "did his head hit u hard that nite",
+        "did a skull crack against your corner",
+        "did you feel the impact of a head against your stone",
+        "was there a hard blow to your corner from a head",
+        "did edmund's head collide with you",
+        "did his head strike your corner with force"
+      ]
+    },
+    {
+      "object_id": "marble_mantelpiece",
+      "fact_id": "mantel-pushed-not-fell",
+      "expected": "yes",
+      "paraphrases": [
+        "was edmund pushed rather than falling on his own",
+        "did he come at you with the force of a shove",
+        "was he shoved into you",
+        "did someone push him into your corner",
+        "was he pushd not just stumbling?",
+        "did he hit you with a shover's force, not a stumble",
+        "was he thrust into you by someone",
+        "did he come at you fast and crooked from a push",
+        "was the force against you from a shove, not a trip",
+        "did somebody shove him against you"
+      ]
+    },
+    {
+      "object_id": "persian_rug",
+      "fact_id": "rug-edmund-fell-hearth",
+      "expected": "yes",
+      "paraphrases": [
+        "did edmund fall on your hearth end",
+        "did he collapse near the fireplace on you",
+        "did edmund come down full length by the fireplace",
+        "did he fall and stay still near the hearth",
+        "did edmund fall near the fire on u",
+        "was edmund's fall at your hearth end",
+        "did he drop down close to the fireplace",
+        "did edmund collapse by the fire on your fabric",
+        "did he fall full-length near the hearth",
+        "was edmund lying near the fireplace on you"
+      ]
+    },
+    {
+      "object_id": "fireplace_poker",
+      "fact_id": "poker-never-struck-flesh",
+      "expected": "no",
+      "paraphrases": [
+        "did you ever strike a person",
+        "have you hit someone with force",
+        "did you strike edmund that night",
+        "have you ever struck a living soul",
+        "did u hit someone hard ever?",
+        "have you ever been used to hit a person",
+        "did you strike any person that evening",
+        "have you ever struck flesh",
+        "did you hit edmund with force",
+        "have you ever harmed a person by striking them"
+      ]
+    },
+    {
+      "object_id": "bay_window",
+      "fact_id": "window-nobody-through",
+      "expected": "no",
+      "paraphrases": [
+        "did anyone climb through you that night",
+        "did a burglar come through your glass",
+        "did someone crawl in through you",
+        "was anyone climbing through your frame that evening",
+        "did a person come thru u that nite",
+        "did anybody enter through your opening",
+        "was there anyone squeezing through you",
+        "did a person climb in through your window",
+        "did anyone pass through you that night",
+        "was there someone climbing in through your glass"
+      ]
+    },
+    {
+      "object_id": "iron_cashbox",
+      "fact_id": "cashbox-not-forced",
+      "expected": "no",
+      "paraphrases": [
+        "were you forced open",
+        "was your lock broken into",
+        "did someone pry you open by force",
+        "was there any damage from forcing your lock",
+        "were u pried open??",
+        "was your lock forced with a tool",
+        "did anyone break your lock open",
+        "was there scratching from forced entry on you",
+        "did somebody force their way into you",
+        "was your lock damaged by force"
+      ]
+    }
+  ],
+  "huh_probes": {
+    "fireplace_poker": [
+      "did you kill edmund",
+      "why did they argue",
+      "who held you that night",
+      "were you angry",
+      "hello there"
+    ],
+    "bay_window": [
+      "did the murderer come through you",
+      "why did they quarrel",
+      "who forced your latch",
+      "what did you see and hear that night",
+      "you're a lovely window"
+    ],
+    "marble_mantelpiece": [
+      "did you kill him",
+      "why was he pushed",
+      "who pushed him",
+      "was he pushed and did he strike you",
+      "good evening to you"
+    ],
+    "brandy_glasses": [
+      "did silas murder edmund",
+      "what were they talking about",
+      "why was silas here",
+      "were you enjoying the evening",
+      "cheers"
+    ],
+    "leather_ledger": [
+      "why were the figures changed",
+      "did silas steal from the company",
+      "who altered your pages",
+      "were the figures altered and was a page torn",
+      "you are very neat"
+    ],
+    "iron_cashbox": [
+      "did a burglar rob you",
+      "why was the money taken",
+      "who has the key now",
+      "were you emptied and was it with the key",
+      "nice and shiny box"
+    ],
+    "persian_rug": [
+      "did silas kill edmund",
+      "where did edmund fall",
+      "why did silas stand over him",
+      "did silas stand over him and then leave",
+      "what a lovely pattern"
+    ],
+    "fire_grate": [
+      "why did they burn the paper",
+      "did the murderer feed you the paper",
+      "who fed you that night",
+      "was it ledger paper and did it burn slow",
+      "you're looking warm today"
+    ]
+  }
+}
