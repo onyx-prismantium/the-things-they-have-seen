@@ -95,3 +95,15 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		var mb := event as InputEventMouseButton
 		if mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT:
 			clicked.emit(object_id)
+
+const ResponseBubbleScene := preload("res://scenes/ui/response_bubble.tscn")
+
+## Pops a big answer word + flavor line above this object (BUILD_BRIEF.md §6.3),
+## then plays the matching voice blip.
+func show_response(result: QAResult) -> void:
+	var bubble: ResponseBubble = ResponseBubbleScene.instantiate()
+	bubble.position = Vector2(-140, -box_size.y * 0.5 - 180)
+	add_child(bubble)
+	bubble.setup(result)
+	AudioDirector.play_answer(object_id, result.answer)
+

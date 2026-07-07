@@ -9,6 +9,16 @@ signal request_finished(object_id: String, result: QAResult)
 
 const MODEL_RELATIVE_PATH := "models/qwen3-0.6b-q4_k_m.gguf"
 
+## Generic (non-case) UI chrome, not case content — safe to live in a .gd file
+## per BUILD_BRIEF.md §9. Shown instead of calling the provider once an
+## object's question budget is spent, so a new (non-cached) question never
+## goes to the model — exhausted =/= mute (§6.2), but it costs nothing either.
+const TIRED_LINES := [
+	"...so tired... ask the others...",
+	"...I have said all I have to say, dear. Ask elsewhere.",
+	"...no more in me tonight. The others may still speak.",
+]
+
 var _provider: NluProvider = null
 var _busy: bool = false
 
@@ -54,6 +64,15 @@ func ask(object_def: ObjectDef, raw_question: String) -> QAResult:
 		GameState.add_transcript_entry(object_def.id, raw_question, repeat_result)
 		request_finished.emit(object_def.id, repeat_result)
 		return repeat_result
+
+	if not GameState.can_ask(object_def.id):
+		var tired_result := QAResult.new()
+		tired_result.answer = "huh"
+		tired_result.fact_id = "none"
+		tired_result.flavor_line = TIRED_LINES[randi() % TIRED_LINES.size()]
+		GameState.add_transcript_entry(object_def.id, raw_question, tired_result)
+		request_finished.emit(object_def.id, tired_result)
+		return tired_result
 
 	# FIFO, max depth 1: further input is locked by the UI while busy, but guard here too.
 	while _busy:
