@@ -5,8 +5,12 @@ extends RefCounted
 ## Builds the per-object system prompt and GBNF grammar described in BUILD_BRIEF.md §4.
 
 const CANDLE_EXAMPLES := """Examples (from a different object, a candle, for format only):
+Memory: candle-snuffed-by-hand: A hand pinched out my flame that night.
+Memory: candle-never-fell: I have never once fallen from my holder. Not that night, not ever.
 Q: did a hand snuff you out?            -> yes|candle-snuffed-by-hand
-Q: were you still burning at midnight?  -> no|candle-out-by-ten
+Q: was your flame put out by someone?   -> yes|candle-snuffed-by-hand
+Q: did you fall from your holder?       -> no|candle-never-fell   (the memory says "never" -> deny it)
+Q: were you knocked to the floor?       -> no|candle-never-fell   (same memory, different words, still deny)
 Q: did the murderer touch you?          -> huh|none
 Q: who lit you?                         -> huh|none
 Q: were you lit, and did he see you?    -> huh|none"""
@@ -43,19 +47,36 @@ static func build_system_prompt(obj: ObjectDef, people_names: Dictionary) -> Str
 		"TASK: The detective asks exactly one question. Output exactly one line:",
 		"ANSWER|FACT-ID",
 		"",
-		"Rules:",
-		"- yes  -> one memory confirms what the question asserts. Give that memory's fact-id.",
-		"- no   -> one memory clearly establishes it did NOT happen. Give that memory's fact-id.",
-		"- huh|none -> everything else: the question uses ideas beyond your senses (murder,",
-		"  guilt, motive, why, crime, killer); or is not a yes/no question (who/what/when/",
-		"  where/why/how); or asks several things at once; or none of your memories cover it;",
-		"  or it is not a question. When uncertain, always huh|none. Never invent. Never",
-		"  answer from general knowledge — only from YOUR MEMORIES above.",
+		"Follow these steps in order:",
+		"1. Is it a single plain yes/no question (not who/what/when/where/why/how, not",
+		"   several questions at once, not a statement or greeting)? If no -> huh|none.",
+		"2. Does it use a concept you cannot sense (murder, guilt, motive, \"why\", crime,",
+		"   killer, a person's identity under a glove)? If yes -> huh|none.",
+		"3. Read YOUR MEMORIES above one at a time and find the ONE memory that matches —",
+		"   is about the same thing the question asks, even worded differently (\"did you",
+		"   touch blood\" matches a memory about blood on you; \"were you shut\" matches a",
+		"   memory about being left open). Before answering, re-read that memory's exact",
+		"   words: if they say something DID NOT happen, was NEVER true, or explicitly",
+		"   deny/rule out the thing asked, the answer is no. Only answer yes if the words",
+		"   POSITIVELY affirm the thing asked.",
+		"4. Only if truly no memory above is about that topic at all -> huh|none.",
+		"",
+		"IMPORTANT: step 3 is the common case, and getting the yes/no answer right matters",
+		"more than anything else — matching a memory does NOT automatically mean yes; check",
+		"whether its words affirm or deny before choosing. Do not retreat to huh|none out of",
+		"caution — if any memory speaks to the question, answer yes or no and cite it.",
+		"Reserve huh|none for the cases in steps 1, 2, and 4 only. Never invent a fact that",
+		"isn't listed above.",
 		"",
 		CANDLE_EXAMPLES,
 	])
 
 ## rule names in GBNF may not contain underscores; our fact ids are already dashed.
+## Polar answer comes BEFORE the fact-id (matches BUILD_BRIEF.md §4.1). An experiment
+## putting fact-id first (so the polar token could condition on the model's own fact
+## choice) was tried and measured WORSE (see docs/reports/) — it made the harder,
+## higher-entropy decision (which of 5-7 facts, or none) come first, which seemed to
+## cascade into more errors. Reverted; kept only as a documented dead end.
 static func build_grammar(obj: ObjectDef) -> String:
 	var ids: Array[String] = []
 	for f: FactDef in obj.facts:

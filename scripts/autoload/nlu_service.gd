@@ -7,7 +7,10 @@ extends Node
 signal request_started(object_id: String)
 signal request_finished(object_id: String, result: QAResult)
 
-const MODEL_RELATIVE_PATH := "models/qwen3-0.6b-q4_k_m.gguf"
+## Qwen3-1.7B, not the brief's original 0.6B default: measured harness accuracy
+## with 0.6B was far below target (see docs/reports/m3_harness_report.md) and
+## 1.7B measured meaningfully better while staying within the latency budget.
+const MODEL_RELATIVE_PATH := "models/qwen3-1.7b-q4_k_m.gguf"
 
 ## Generic (non-case) UI chrome, not case content — safe to live in a .gd file
 ## per BUILD_BRIEF.md §9. Shown instead of calling the provider once an
@@ -24,15 +27,27 @@ var _busy: bool = false
 
 func _ready() -> void:
 	_select_provider()
+	if not is_mock():
+		_provider.warm_up() # fire-and-forget; Main polls is_ready()/model_missing() for the boot screen
 
 func _select_provider() -> void:
 	if _use_mock():
 		_provider = MockProvider.new()
 		print("NluService: using MockProvider (--mock-nlu)")
 	else:
-		var model_path := "%s/%s" % [OS.get_user_data_dir(), MODEL_RELATIVE_PATH]
+		var relative_path := MODEL_RELATIVE_PATH
+		var override_file := OS.get_environment("NW_MODEL_FILE")
+		if override_file != "":
+			relative_path = "models/%s" % override_file
+		var model_path := "%s/%s" % [OS.get_user_data_dir(), relative_path]
 		_provider = NobodyWhoProvider.new(self, model_path)
 		print("NluService: using NobodyWhoProvider, model_path=%s" % model_path)
+
+func model_missing() -> bool:
+	return _provider is NobodyWhoProvider and (_provider as NobodyWhoProvider).model_file_missing()
+
+func expected_model_path() -> String:
+	return "%s/%s" % [OS.get_user_data_dir(), MODEL_RELATIVE_PATH]
 
 func _use_mock() -> bool:
 	return "--mock-nlu" in OS.get_cmdline_args() or "--mock-nlu" in OS.get_cmdline_user_args()

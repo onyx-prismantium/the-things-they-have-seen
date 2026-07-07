@@ -8,6 +8,13 @@ const NOBODYWHO_PINNED_VERSION := "9.4.0" # BUILD_BRIEF.md §0.3, §2.2
 
 @onready var _room: Node = $RoomStudy
 @onready var _question_panel: QuestionPanel = $UILayer/QuestionPanel
+@onready var _ui_layer: CanvasLayer = $UILayer
+@onready var _deduction_board: DeductionBoard = $UILayer/DeductionBoard
+@onready var _present_deduction_button: Button = $UILayer/PresentDeductionButton
+@onready var _case_briefing: CaseBriefing = $UILayer/CaseBriefing
+@onready var _end_screen: EndScreen = $UILayer/EndScreen
+
+var _boot_screen: Control = null
 
 func _ready() -> void:
 	_log_nobodywho_status()
@@ -17,17 +24,72 @@ func _ready() -> void:
 	print("Main: case '%s' ready" % CaseLoader.current_case.title)
 	_room.object_selected.connect(_on_object_selected)
 	_question_panel.answered.connect(_on_answered)
+	_present_deduction_button.pressed.connect(_on_present_deduction_pressed)
+	_case_briefing.finished.connect(_on_briefing_finished)
+
+	if not NluService.is_mock() and NluService.model_missing():
+		_show_model_missing_screen()
+	elif not NluService.is_mock():
+		print("NluService: warming up NobodyWho worker (model=%s)..." % NluService.expected_model_path().get_file())
+
 	if OS.get_environment("SELFTEST_M2") != "":
 		await _run_selftest_m2()
 		get_tree().quit()
 
+	if OS.get_environment("SELFTEST_M3_SINGLE") != "":
+		await _run_selftest_m3_single()
+		get_tree().quit()
+
+	if OS.get_environment("SELFTEST_M3_GOLDEN") != "":
+		await _run_selftest_m3_golden()
+		get_tree().quit()
+
+## BUILD_BRIEF.md §2.3: "Add a boot check with a clear 'place model file here'
+## error screen listing the expected path + filename." Built procedurally —
+## this is a one-off system message, not case content, so it doesn't warrant
+## its own authored scene.
+func _show_model_missing_screen() -> void:
+	_boot_screen = PanelContainer.new()
+	_boot_screen.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_ui_layer.add_child(_boot_screen)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 120)
+	margin.add_theme_constant_override("margin_top", 120)
+	margin.add_theme_constant_override("margin_right", 120)
+	margin.add_theme_constant_override("margin_bottom", 120)
+	_boot_screen.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	margin.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "No local model found"
+	title.add_theme_font_size_override("font_size", 32)
+	vbox.add_child(title)
+
+	var body := Label.new()
+	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	body.text = "The Things They Have Seen needs a local GGUF model to talk to objects.\n\nExpected file:\n%s\n\nSee docs/MODEL_SETUP.md for download instructions, or launch with --mock-nlu to play against the scripted mock provider instead." % NluService.expected_model_path()
+	vbox.add_child(body)
+
 func _on_object_selected(object_id: String) -> void:
+	if _boot_screen != null or GameState.case_is_over:
+		return
 	_question_panel.open_for(object_id)
 
 func _on_answered(object_id: String, result: QAResult) -> void:
 	var target: InteractiveObject = _room.get_node_or_null(object_id)
 	if target != null:
 		target.show_response(result)
+
+func _on_present_deduction_pressed() -> void:
+	if GameState.case_is_over:
+		return
+	_deduction_board.open_board()
+
+func _on_briefing_finished() -> void:
+	pass # room is already visible underneath; briefing was just an overlay
 
 func _process(_delta: float) -> void:
 	var shot_path := OS.get_environment("SCREENSHOT_PATH")
@@ -116,6 +178,72 @@ func _run_selftest_m2() -> void:
 	await NluService.ask(poker, "did a gloved hand hold you that night")
 	var tired: QAResult = await NluService.ask(poker, "did someone force the window latch with you")
 	print("SELFTEST exhausted: remaining=%d answer=%s flavor='%s' (expect remaining=0, answer=huh, tired flavor)" % [GameState.questions_remaining("fireplace_poker"), tired.answer, tired.flavor_line])
+
+## Quick live-model smoke test (SELFTEST_M3_SINGLE=1): waits for the worker,
+## asks one known question, prints the raw+parsed result and latency.
+func _run_selftest_m3_single() -> void:
+	print("SELFTEST_M3_SINGLE: waiting for NobodyWho worker...")
+	var waited_ms := 0
+	while not NluService.is_ready() and waited_ms < 120000:
+		await get_tree().create_timer(0.5).timeout
+		waited_ms += 500
+	print("SELFTEST_M3_SINGLE: worker ready=%s after %dms" % [NluService.is_ready(), waited_ms])
+	if not NluService.is_ready():
+		return
+	var poker: ObjectDef = CaseLoader.current_case.objects["fireplace_poker"]
+	var result: QAResult = await NluService.ask(poker, "did you strike edmund")
+	print("SELFTEST_M3_SINGLE result: answer=%s fact=%s latency=%dms" % [result.answer, result.fact_id, result.latency_ms])
+
+## M3 gate (§7): all 61 golden sample_qa answered by the live model. Targets:
+## >=95% yes/no accuracy, >=90% huh accuracy, median latency <=2s.
+func _run_selftest_m3_golden() -> void:
+	print("SELFTEST_M3_GOLDEN: waiting for NobodyWho worker...")
+	var waited_ms := 0
+	while not NluService.is_ready() and waited_ms < 120000:
+		await get_tree().create_timer(0.5).timeout
+		waited_ms += 500
+	print("SELFTEST_M3_GOLDEN: worker ready=%s after %dms" % [NluService.is_ready(), waited_ms])
+	if not NluService.is_ready():
+		return
+
+	var the_case: CaseDef = CaseLoader.current_case
+	var yn_total := 0
+	var yn_correct := 0
+	var huh_total := 0
+	var huh_correct := 0
+	var latencies: Array[int] = []
+	var failures: Array[String] = []
+
+	for oid: String in the_case.object_ids:
+		var obj: ObjectDef = the_case.objects[oid]
+		for qa: SampleQADef in obj.sample_qa:
+			GameState.reset_case()
+			var result: QAResult = await NluService.ask(obj, qa.q)
+			latencies.append(result.latency_ms)
+			if qa.a == "huh":
+				huh_total += 1
+				if result.answer == "huh":
+					huh_correct += 1
+				else:
+					failures.append("%s: '%s' expected huh got %s|%s" % [oid, qa.q, result.answer, result.fact_id])
+			else:
+				yn_total += 1
+				if result.answer == qa.a and result.fact_id == qa.fact:
+					yn_correct += 1
+				else:
+					failures.append("%s: '%s' expected %s|%s got %s|%s" % [oid, qa.q, qa.a, qa.fact, result.answer, result.fact_id])
+
+	latencies.sort()
+	var p50: int = latencies[latencies.size() / 2] if latencies.size() > 0 else 0
+	var p95: int = latencies[int(latencies.size() * 0.95)] if latencies.size() > 0 else 0
+
+	print("SELFTEST_M3_GOLDEN: yes/no %d/%d (%.1f%%), huh %d/%d (%.1f%%), latency p50=%dms p95=%dms" % [
+		yn_correct, yn_total, 100.0 * yn_correct / maxi(1, yn_total),
+		huh_correct, huh_total, 100.0 * huh_correct / maxi(1, huh_total),
+		p50, p95,
+	])
+	for f: String in failures:
+		print("  FAIL: ", f)
 
 func _log_nobodywho_status() -> void:
 	if ClassDB.class_exists("NobodyWhoChat") and ClassDB.class_exists("NobodyWhoModel"):
