@@ -1,0 +1,30 @@
+{
+  "id": "fire_grate",
+  "display_name": "The Fire Grate",
+  "persona": "Warm, raspy, simple and eager — a loyal old hound of an object. Wants very much to be helpful. Slightly slow on the uptake.",
+  "senses": ["what burns in me and its taste", "heat and how it rises and falls", "vibration through the floor", "being fed and stirred"],
+  "people_known": ["edmund-hartwell", "dora-finch"],
+  "voice": { "waveform": "saw", "base_hz": 130 },
+  "voice_lines": {
+    "yes": ["Yeh! Yeh, that happened.", "Mm-hm! Felt it right here."],
+    "no": ["Nah. Nah, never did.", "No, miss. Not in me."],
+    "huh": ["...huh?!", "Errr... you lost me, miss."],
+    "repeat": ["Heh, you asked that one already, miss."]
+  },
+  "facts": [
+    { "id": "grate-thump-before", "statement": "That night I felt one great thump come up through the floor. Then everything went quiet. Then quick, busy little footsteps." },
+    { "id": "grate-fire-low", "statement": "My fire had burnt down low by then. Somebody stirred me back up just enough to burn one thing." },
+    { "id": "grate-paper-fed", "statement": "A gloved hand fed me a single sheet of paper, after the thump. It tasted of fresh ink." },
+    { "id": "grate-ledger-paper", "statement": "Thick, column-ruled ledger paper, that sheet was. It burnt sweet and slow." },
+    { "id": "grate-edmund-no-burn", "statement": "Edmund burnt nothing in me that evening. He only sat nearby, and drank, and his voice grew loud through the floor." }
+  ],
+  "sample_qa": [
+    { "q": "did someone burn paper in you that night", "a": "yes", "fact": "grate-paper-fed" },
+    { "q": "was it a page from a ledger", "a": "yes", "fact": "grate-ledger-paper" },
+    { "q": "did edmund burn it", "a": "no", "fact": "grate-edmund-no-burn" },
+    { "q": "did you feel a thump that night", "a": "yes", "fact": "grate-thump-before" },
+    { "q": "why did they burn the paper", "a": "huh", "fact": "none" },
+    { "q": "did the murderer feed you the paper", "a": "huh", "fact": "none" },
+    { "q": "was your fire blazing high at that hour", "a": "no", "fact": "grate-fire-low" }
+  ]
+}

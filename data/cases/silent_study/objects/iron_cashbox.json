@@ -1,0 +1,30 @@
+{
+  "id": "iron_cashbox",
+  "display_name": "The Cash Box",
+  "persona": "Paranoid, miserly whisperer. Grieves its banknotes like children. Deeply proud of never having been forced.",
+  "senses": ["key or force upon my lock", "weight of my contents", "fingers within me"],
+  "people_known": ["edmund-hartwell", "dora-finch"],
+  "voice": { "waveform": "saw", "base_hz": 196 },
+  "voice_lines": {
+    "yes": ["...yes. Yes, it is so.", "Yes — keep your voice DOWN — yes."],
+    "no": ["No. No no no.", "Never. Not once."],
+    "huh": ["...what? WHAT?", "Speak plainly or not at all. ...What?"],
+    "repeat": ["I said it once. Once was already too loud."]
+  },
+  "facts": [
+    { "id": "cashbox-key-opened", "statement": "I was opened that night with my own true key. No prying. No violence. The key." },
+    { "id": "cashbox-not-forced", "statement": "There is not one scratch of forcing on me — whatever the constables scribbled in their little books." },
+    { "id": "cashbox-gloved-emptied", "statement": "Gloved fingers lifted my banknotes out that night. Every last one. Gloves tell me nothing of whose fingers." },
+    { "id": "cashbox-key-chain", "statement": "My key lives on Edmund's watch chain and never leaves him. That night, it left him." },
+    { "id": "cashbox-dora-never", "statement": "The maid Dora dusts me weekly and has never once opened me." }
+  ],
+  "sample_qa": [
+    { "q": "were you forced open", "a": "no", "fact": "cashbox-not-forced" },
+    { "q": "were you opened with your own key", "a": "yes", "fact": "cashbox-key-opened" },
+    { "q": "did a burglar rob you", "a": "huh", "fact": "none" },
+    { "q": "did a stranger open you", "a": "huh", "fact": "none" },
+    { "q": "did a gloved hand take your money", "a": "yes", "fact": "cashbox-gloved-emptied" },
+    { "q": "has dora ever opened you", "a": "no", "fact": "cashbox-dora-never" },
+    { "q": "does your key stay on edmund's watch chain", "a": "yes", "fact": "cashbox-key-chain" }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "leather_ledger",
+  "display_name": "The Ledger",
+  "persona": "Prim, exacting head clerk. Utterly scandalized — not by the death, but by the state of the FIGURES. Pronounces 'irregular' like a curse.",
+  "senses": ["pen pressure and ink upon my pages", "hands that open and turn me", "tearing"],
+  "people_known": ["edmund-hartwell", "silas-crane"],
+  "voice": { "waveform": "square", "base_hz": 330 },
+  "voice_lines": {
+    "yes": ["Correct. Duly recorded.", "Yes. It is entered so."],
+    "no": ["Incorrect.", "No. The record shows otherwise."],
+    "huh": ["That is... not a ledger matter.", "I cannot balance that question."],
+    "repeat": ["See previous entry. Do keep up."]
+  },
+  "facts": [
+    { "id": "ledger-edmund-pressed", "statement": "That afternoon Edmund's pen pressed into my pages so hard it nearly tore them. Fury, written in copperplate." },
+    { "id": "ledger-torn-page", "statement": "That same afternoon Edmund's own hand tore a page out of me. The indignity of it." },
+    { "id": "ledger-second-hand", "statement": "For months, a second hand has written in me after hours — a lighter pen. Silas Crane's hand. I know his loops." },
+    { "id": "ledger-figures-altered", "statement": "Figures in me were scratched out and rewritten by that second hand. Sums made smaller. Most irregular." },
+    { "id": "ledger-rifled-night", "statement": "Late that night, gloved fingers rifled my pages in haste and stopped at the wound where the page was torn." }
+  ],
+  "sample_qa": [
+    { "q": "did silas crane write in you", "a": "yes", "fact": "ledger-second-hand" },
+    { "q": "were your figures altered", "a": "yes", "fact": "ledger-figures-altered" },
+    { "q": "did edmund tear a page from you", "a": "yes", "fact": "ledger-torn-page" },
+    { "q": "did silas steal from the company", "a": "huh", "fact": "none" },
+    { "q": "did a gloved hand search you that night", "a": "yes", "fact": "ledger-rifled-night" },
+    { "q": "was edmund calm when he last wrote in you", "a": "no", "fact": "ledger-edmund-pressed" },
+    { "q": "why were the figures changed", "a": "huh", "fact": "none" }
+  ]
+}

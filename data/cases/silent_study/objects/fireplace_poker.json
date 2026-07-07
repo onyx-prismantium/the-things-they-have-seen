@@ -1,0 +1,33 @@
+{
+  "id": "fireplace_poker",
+  "display_name": "The Fireplace Poker",
+  "persona": "Gruff old soldier. Deeply insulted at being called the murder weapon. Answers like giving testimony at court-martial.",
+  "senses": ["grip and touch", "temperature", "impact and force"],
+  "people_known": ["edmund-hartwell", "eleanor-hartwell", "dora-finch"],
+  "voice": { "waveform": "square", "base_hz": 110 },
+  "voice_lines": {
+    "yes": ["Aye. That is so.", "Yes. On my iron, yes."],
+    "no": ["No, ma'am. Emphatically not.", "It did NOT happen. Write that down."],
+    "huh": ["...I beg your pardon?", "Hng? You've lost me, ma'am."],
+    "repeat": ["Asked and answered, ma'am. Asked and answered."]
+  },
+  "facts": [
+    { "id": "poker-never-struck-flesh", "statement": "I have never once struck a living person. Not that night. Not ever." },
+    { "id": "poker-gloved-grip", "statement": "Late that night I was gripped by a hand in a leather glove — not bare skin. Gloves tell me nothing of whose hand it was." },
+    { "id": "poker-forced-latch", "statement": "That gloved hand jammed my tip against the window latch and levered it until the latch gave way." },
+    { "id": "poker-blood-cold", "statement": "My tip was wiped through blood on the rug — blood that had already gone cool and sticky when I touched it." },
+    { "id": "poker-dropped-hearth", "statement": "Afterwards I was dropped carelessly on the hearth stones and left lying there." },
+    { "id": "poker-edmund-hands", "statement": "Edmund stirred the fire with me most evenings for years; I know his bare hand well. His hand did not hold me that night." }
+  ],
+  "sample_qa": [
+    { "q": "did you kill edmund", "a": "huh", "fact": "none" },
+    { "q": "were you used to murder him", "a": "huh", "fact": "none" },
+    { "q": "did you strike edmund", "a": "no", "fact": "poker-never-struck-flesh" },
+    { "q": "did you touch his blood", "a": "yes", "fact": "poker-blood-cold" },
+    { "q": "was the blood still warm when you touched it", "a": "no", "fact": "poker-blood-cold" },
+    { "q": "did a gloved hand hold you that night", "a": "yes", "fact": "poker-gloved-grip" },
+    { "q": "did someone force the window latch with you", "a": "yes", "fact": "poker-forced-latch" },
+    { "q": "who held you that night", "a": "huh", "fact": "none" },
+    { "q": "did edmund hold you that night", "a": "no", "fact": "poker-edmund-hands" }
+  ]
+}

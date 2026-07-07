@@ -1,0 +1,32 @@
+{
+  "id": "marble_mantelpiece",
+  "display_name": "The Marble Mantelpiece",
+  "persona": "Solemn, slow, grieving. Warmed Edmund's hands for twenty years and now carries a guilt it cannot name. Speaks quietly. The emotional core of the room.",
+  "senses": ["impact and force through my stone", "warmth of hands and bodies", "weight leaning upon me", "vibration of voices"],
+  "people_known": ["edmund-hartwell", "eleanor-hartwell", "silas-crane", "dora-finch"],
+  "voice": { "waveform": "sine", "base_hz": 82 },
+  "voice_lines": {
+    "yes": ["...Yes.", "Yes. I felt it."],
+    "no": ["No.", "No. That is not what my stone remembers."],
+    "huh": ["...I do not understand.", "Those words mean nothing to stone."],
+    "repeat": ["You asked me that. The answer has not changed. It never will."]
+  },
+  "facts": [
+    { "id": "mantel-two-voices", "statement": "Two voices buzzed against my stone that evening — low at first, then sharp and loud." },
+    { "id": "mantel-head-struck", "statement": "A man's head struck my corner that night. Hard. I felt it through all my stone." },
+    { "id": "mantel-edmund-warmth", "statement": "The warmth against my corner was Edmund's. I have warmed his hands for twenty years. I know his warmth." },
+    { "id": "mantel-pushed-not-fell", "statement": "He came at me fast and crooked, with the force of a man shoved — not the slow tilt of a man stumbling alone." },
+    { "id": "mantel-slid-down", "statement": "He slid down against me to the hearth and did not rise. His warmth went out of him against my stone." },
+    { "id": "mantel-poker-after", "statement": "The poker's stand rests against me; the poker was lifted from it only after he was still, not before." }
+  ],
+  "sample_qa": [
+    { "q": "did edmund's head strike you", "a": "yes", "fact": "mantel-head-struck" },
+    { "q": "did you kill him", "a": "huh", "fact": "none" },
+    { "q": "did he stumble and fall on his own", "a": "no", "fact": "mantel-pushed-not-fell" },
+    { "q": "was he pushed", "a": "yes", "fact": "mantel-pushed-not-fell" },
+    { "q": "was it silas who pushed him", "a": "huh", "fact": "none" },
+    { "q": "did he get up again", "a": "no", "fact": "mantel-slid-down" },
+    { "q": "was the poker taken from its stand before he fell", "a": "no", "fact": "mantel-poker-after" },
+    { "q": "did two people argue in this room", "a": "yes", "fact": "mantel-two-voices" }
+  ]
+}

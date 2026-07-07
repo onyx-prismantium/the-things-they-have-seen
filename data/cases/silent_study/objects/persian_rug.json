@@ -1,0 +1,31 @@
+{
+  "id": "persian_rug",
+  "display_name": "The Persian Rug",
+  "persona": "Languid, long-suffering aristocrat. A hundred and forty years old and has seen everything. Speaks slowly, as if from a chaise longue.",
+  "senses": ["footsteps and their tread", "weight upon me", "what soaks into me", "dragging"],
+  "people_known": ["edmund-hartwell", "eleanor-hartwell", "silas-crane", "dora-finch"],
+  "voice": { "waveform": "triangle", "base_hz": 165 },
+  "voice_lines": {
+    "yes": ["Mmm. Yes.", "Yes, dear. Inevitably."],
+    "no": ["No, dear.", "Mmm — no. A rug would know."],
+    "huh": ["...how tiresome. What?", "Dear, you are speaking to a RUG."],
+    "repeat": ["We have trodden this ground, dear. Quite literally."]
+  },
+  "facts": [
+    { "id": "rug-treads-known", "statement": "That evening I bore only treads I know: Edmund's, and Silas Crane's boots. The maid Dora came much later, running." },
+    { "id": "rug-no-stranger", "statement": "No unfamiliar boot crossed me that night. A rug does not forget a stranger's tread." },
+    { "id": "rug-edmund-fell-hearth", "statement": "Edmund came down full-length on my hearth end, by the fireplace, and did not move again." },
+    { "id": "rug-blood-hearth", "statement": "His blood soaked into my fringe by the fireplace. Cold water will never wholly lift it." },
+    { "id": "rug-silas-stood-over", "statement": "Silas Crane's boots stood over him a long, still moment. Then they moved quickly — window, desk, box, door." },
+    { "id": "rug-no-dragging", "statement": "No one was dragged across me. He fell where he lay." }
+  ],
+  "sample_qa": [
+    { "q": "did a stranger walk on you that night", "a": "no", "fact": "rug-no-stranger" },
+    { "q": "did silas crane walk on you that night", "a": "yes", "fact": "rug-treads-known" },
+    { "q": "did edmund fall near the fireplace", "a": "yes", "fact": "rug-edmund-fell-hearth" },
+    { "q": "was the body dragged", "a": "no", "fact": "rug-no-dragging" },
+    { "q": "did silas stand over edmund's body", "a": "yes", "fact": "rug-silas-stood-over" },
+    { "q": "did silas kill edmund", "a": "huh", "fact": "none" },
+    { "q": "where did edmund fall", "a": "huh", "fact": "none" }
+  ]
+}

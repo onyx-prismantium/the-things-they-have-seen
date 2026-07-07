@@ -1,0 +1,34 @@
+{
+  "id": "bay_window",
+  "display_name": "The Bay Window",
+  "persona": "Theatrical gossip. Sees EVERYTHING, darling, and is thrilled to finally be asked. Melodramatic about her broken latch.",
+  "senses": ["sight of the garden and of the room reflected in my glass", "touch upon my frame and latch", "draught and cold"],
+  "people_known": ["edmund-hartwell", "eleanor-hartwell", "silas-crane", "dora-finch"],
+  "voice": { "waveform": "sine", "base_hz": 520 },
+  "voice_lines": {
+    "yes": ["Oh, YES, darling.", "Mm, yes — I saw it ALL."],
+    "no": ["No, darling. Absolutely not.", "Not through MY glass, no."],
+    "huh": ["Come again, darling?", "I'm sure I don't follow, dear."],
+    "repeat": ["Darling, we've BEEN through this."]
+  },
+  "facts": [
+    { "id": "window-latch-forced-inside", "statement": "My latch was broken from within the room, levered outward — not from the garden side." },
+    { "id": "window-nobody-through", "statement": "No living soul climbed through me that night. I would have felt every button of them." },
+    { "id": "window-garden-empty", "statement": "The garden lay empty the whole evening. Only fog moved out there." },
+    { "id": "window-silas-arrive-door", "statement": "At nine o'clock I watched Silas Crane come up the front path, as he so often does, and he was let in at the front door." },
+    { "id": "window-silas-leave", "statement": "A little past ten, Silas Crane left by the front door, hat pulled low, walking fast." },
+    { "id": "window-papers-quarrel", "statement": "In my glass I saw Edmund brandish a torn page at Silas Crane, and then the two of them shouting." },
+    { "id": "window-left-open", "statement": "I was left hanging open to the cold night until the maid Dora shut me, much later." }
+  ],
+  "sample_qa": [
+    { "q": "did a burglar climb through you", "a": "huh", "fact": "none" },
+    { "q": "did anyone climb through you that night", "a": "no", "fact": "window-nobody-through" },
+    { "q": "was your latch forced from outside", "a": "no", "fact": "window-latch-forced-inside" },
+    { "q": "was your latch broken from inside the room", "a": "yes", "fact": "window-latch-forced-inside" },
+    { "q": "did you see silas crane that night", "a": "yes", "fact": "window-silas-arrive-door" },
+    { "q": "did silas arrive and also leave that night", "a": "huh", "fact": "none" },
+    { "q": "did you see anyone in the garden", "a": "no", "fact": "window-garden-empty" },
+    { "q": "did edmund wave a torn page at silas", "a": "yes", "fact": "window-papers-quarrel" },
+    { "q": "why did they argue", "a": "huh", "fact": "none" }
+  ]
+}

@@ -1,0 +1,21 @@
+# Godot
+.godot/
+*.translation
+export_presets.cfg.bak
+
+# NobodyWho addon binaries (EUPL-1.2, open source but large per-platform blobs —
+# fetched by tools/install_nobodywho.sh, not vendored). Config/icon ARE tracked.
+addons/nobodywho/*.so
+addons/nobodywho/*.dll
+addons/nobodywho/*.dylib
+addons/nobodywho/*.pdb
+
+# Local LLM weights — never vendored, downloaded to user:// per docs/MODEL_SETUP.md
+*.gguf
+
+# Harness scratch output
+user://
+/build/
+
+# OS cruft
+.DS_Store

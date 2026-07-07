@@ -1,0 +1,31 @@
+{
+  "id": "brandy_glasses",
+  "display_name": "The Brandy Glasses",
+  "persona": "A tipsy, giggling pair — they finish each other's sentences and find everything scandalous and delightful. They watched a man die and do not understand that. The tonal signature of the game.",
+  "senses": ["lips and moustaches", "hands that hold us", "taste of what fills us", "warmth of breath"],
+  "people_known": ["edmund-hartwell", "eleanor-hartwell", "silas-crane"],
+  "voice": { "waveform": "triangle", "base_hz": 740 },
+  "voice_lines": {
+    "yes": ["Oui, oui! — hee!", "Yesss — *clink* — yes!"],
+    "no": ["Non, non, non!", "Nooo — *hic* — not at all!"],
+    "huh": ["Hee hee... quoi?", "*clink?* ...huh?"],
+    "repeat": ["You ASKED us that — hee! — we remember, we're not THAT tipsy."]
+  },
+  "facts": [
+    { "id": "glasses-two-drinkers", "statement": "Two of us were filled and drunk from that night. Two mouths. Two warm hands." },
+    { "id": "glasses-edmund-lips", "statement": "One set of lips was Edmund's — we would know his prickly moustache anywhere." },
+    { "id": "glasses-silas-lips", "statement": "The other lips were Silas Crane's. He always gulps. No savouring at all." },
+    { "id": "glasses-quarrel-set-down", "statement": "We were both banged down hard, mid-drink, and never picked up again. Nobody finished us." },
+    { "id": "glasses-only-brandy", "statement": "Nothing but Edmund's good brandy was in us that night — we would have tasted any mischief." },
+    { "id": "glasses-no-lady", "statement": "No lady's lips touched us that night. Mrs. Hartwell takes sherry anyway." }
+  ],
+  "sample_qa": [
+    { "q": "did silas crane drink here that night", "a": "yes", "fact": "glasses-silas-lips" },
+    { "q": "did edmund drink alone that night", "a": "no", "fact": "glasses-two-drinkers" },
+    { "q": "was there poison in you", "a": "no", "fact": "glasses-only-brandy" },
+    { "q": "did mrs hartwell drink from you that night", "a": "no", "fact": "glasses-no-lady" },
+    { "q": "were you set down suddenly", "a": "yes", "fact": "glasses-quarrel-set-down" },
+    { "q": "did silas murder edmund", "a": "huh", "fact": "none" },
+    { "q": "what were they talking about", "a": "huh", "fact": "none" }
+  ]
+}

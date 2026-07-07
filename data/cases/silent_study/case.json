@@ -1,0 +1,62 @@
+{
+  "id": "silent_study",
+  "title": "The Silent Study",
+  "briefing": "Kensington, November 1887. Edmund Hartwell — tea and silk, imported; opinions, exported — was found dead in his study at eleven o'clock, the night before last. The window hangs forced, the cash box gapes empty, the fireplace poker lies bloodied on the hearth. Scotland Yard is satisfied: a burglary interrupted, a blow struck, a man dead at fifty-one.\n\nThe widow is not satisfied. She has hired you — Laura Sinclair, spiritualist, cleanser of unquiet rooms — to 'settle the air' before the funeral. The constable at the door thinks you are a fraud. Let him.\n\nThe room remembers. Ask it.",
+  "police_theory": "A burglar entered by the window, was surprised by Mr. Hartwell, struck him with the poker, emptied the cash box, and fled the way he came.",
+  "people": [
+    { "id": "edmund-hartwell", "name": "Edmund Hartwell", "note": "the victim" },
+    { "id": "eleanor-hartwell", "name": "Eleanor Hartwell", "note": "the widow" },
+    { "id": "silas-crane", "name": "Silas Crane", "note": "business partner, frequent visitor" },
+    { "id": "dora-finch", "name": "Dora Finch", "note": "housemaid" }
+  ],
+  "suspects": [
+    { "id": "silas-crane", "name": "Silas Crane", "blurb": "Edmund's business partner of eleven years. Keeps the firm's books. Was 'at his club' that evening." },
+    { "id": "eleanor-hartwell", "name": "Eleanor Hartwell", "blurb": "The widow. Heiress to the estate. Married nineteen years; retired early with a headache." },
+    { "id": "dora-finch", "name": "Dora Finch", "blurb": "The housemaid. Found the body at eleven. Recently docked a week's wages over a broken vase." },
+    { "id": "thomas-webb", "name": "Thomas Webb", "blurb": "Footman, dismissed a fortnight ago for drink. Seen loitering in the mews since." },
+    { "id": "augustus-pryce", "name": "Augustus Pryce", "blurb": "The family solicitor. Drafted a new will last month. Called at the house on Tuesday." },
+    { "id": "unknown-burglar", "name": "A burglar unknown", "blurb": "Scotland Yard's man: in by the window, out with the cash, the poker between." }
+  ],
+  "motives": [
+    { "id": "conceal-embezzlement", "label": "To conceal embezzlement" },
+    { "id": "inheritance", "label": "To claim an inheritance" },
+    { "id": "jealous-affair", "label": "Jealousy over an affair" },
+    { "id": "dismissal-revenge", "label": "Revenge for a dismissal" },
+    { "id": "gambling-debts", "label": "Desperation over gambling debts" },
+    { "id": "simple-robbery", "label": "Simple robbery" }
+  ],
+  "weapons": [
+    { "id": "fireplace-poker", "label": "The fireplace poker" },
+    { "id": "marble-mantelpiece", "label": "The marble mantelpiece" },
+    { "id": "brass-candlestick", "label": "The brass candlestick" },
+    { "id": "letter-opener", "label": "The letter opener" },
+    { "id": "crystal-decanter", "label": "The crystal decanter" },
+    { "id": "walking-cane", "label": "A walking cane" }
+  ],
+  "solution": {
+    "culprit": "silas-crane",
+    "motive": "conceal-embezzlement",
+    "weapon": "marble-mantelpiece"
+  },
+  "solution_support": {
+    "culprit": ["window-silas-arrive-door", "window-silas-leave", "window-papers-quarrel", "glasses-silas-lips", "rug-treads-known", "rug-silas-stood-over", "ledger-second-hand"],
+    "motive": ["ledger-second-hand", "ledger-figures-altered", "ledger-torn-page", "ledger-edmund-pressed", "grate-paper-fed", "grate-ledger-paper", "window-papers-quarrel"],
+    "weapon": ["mantel-head-struck", "mantel-edmund-warmth", "mantel-slid-down", "mantel-pushed-not-fell", "rug-edmund-fell-hearth", "rug-blood-hearth", "grate-thump-before"]
+  },
+  "elimination_facts": ["poker-never-struck-flesh", "poker-blood-cold", "poker-forced-latch", "window-latch-forced-inside", "window-nobody-through", "window-garden-empty", "cashbox-key-opened", "cashbox-not-forced", "glasses-only-brandy", "rug-no-stranger"],
+  "objects": ["fireplace_poker", "bay_window", "marble_mantelpiece", "brandy_glasses", "leather_ledger", "iron_cashbox", "persian_rug", "fire_grate"],
+  "tutorial_watch": [
+    "(Your pocket watch, warm in your palm, ticks against your thumb.)",
+    "\"They will all talk to you, Laura. But remember what we are. We remember what we feel — not what it means.\"",
+    "\"Ask us yes or no. Ask us what we touched, saw, tasted, carried. Ask us WHY and you will only confuse us.\"",
+    "\"They tire quickly — three true answers each, so spend them well. A confused 'Huh?!' costs you nothing. And if you are truly stuck... wind me, once, and I will give one of them their breath back.\""
+  ],
+  "deduction_feedback": [
+    "The room is silent. Nothing rings true.",
+    "One thread rings true. Two do not.",
+    "Two threads ring true. One does not.",
+    "Every thread rings true."
+  ],
+  "epilogue_win": "You write three lines on the back of a calling card and leave it with the constable: the partner, the books, the mantel's corner. By Friday, Silas Crane's gloves are found in the mews behind his club, and the torn page's ash is matched to the ledger's wound. Scotland Yard announces that diligent police work has prevailed.\n\nYou were paid to cleanse a room. The room, as ever, did the work. On the way out you rest a hand on the mantelpiece — a long moment. It did not mean to. You know.\n\nThe only innocents in this room were the objects.",
+  "epilogue_lose": "Three times you speak, and three times the constable's patience thins. The widow pays you and does not meet your eye. The verdict stands: person or persons unknown.\n\nBehind you, as the door closes, the study holds everything it told you — every yes, every no — patient, exact, and unheard. Objects do not forget.\n\nPerhaps another room. Perhaps another year. They will still remember."
+}
